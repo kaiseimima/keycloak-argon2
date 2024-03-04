@@ -1,0 +1,6 @@
+{
+    "id": "devArgon2",
+    "realm": "devArgon2",
+    "enabled": true,
+    "passwordPolicy": "hashAlgorithm(argon2)"
+}

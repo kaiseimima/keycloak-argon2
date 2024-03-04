@@ -1,0 +1,6 @@
+{
+    "clientName": "argon2",
+    "realmName": "devArgon2", 
+    "keycloakUsername": "argon2user",
+    "keycloakPassword": "password"
+}

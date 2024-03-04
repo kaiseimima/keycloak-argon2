@@ -1,0 +1,11 @@
+{
+    "username": "argon2user",
+    "enabled": true,
+    "credentials": [
+        {
+            "type": "password",
+            "value": "password",
+            "temporary": false
+        }
+    ]
+}

@@ -1,0 +1,85 @@
+version: '3'
+
+services:
+  rev:
+    image: nginx:latest
+    restart: always
+    depends_on:
+      - keycloak
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    networks:
+      - keycloak_argon2
+
+  db:
+    restart: always
+    image: mysql:5.7.24
+    environment:
+      MYSQL_ROOT_PASSWORD: dbpass
+      MYSQL_DATABASE: keycloak
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: dbpass
+    ports:
+      - "3306:3306"
+    # command: mysqld --lower_case_table_names=1
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - keycloak_argon2
+
+
+  keycloak:
+    restart: always
+    image: test_keycloak
+    command: start-dev
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    environment:
+      - DB_VENDOR=mysql
+      - DB_ADDR=db
+      - DB_USER=dbuser
+      - DB_PASSWORD=dbpass
+      - DB_DATABASE=keycloak
+      # - KEYCLOAK_USER=admin
+      # - KEYCLOAK_PASSWORD=admin
+      - KEYCLOAK_ADMIN=admin2   # for new version
+      - KEYCLOAK_ADMIN_PASSWORD=admin2  # for new version
+      - PROXY_ADDRESS_FORWARDING=true
+      - JDBC_PARAMS=&enabledTLSProtocols=TLSv1.2
+    networks:
+      - keycloak_argon2
+
+  python-app:
+    restart: always
+    # build:
+    #   context: ./python-app
+    image: python
+    container_name: 'python-app'
+    working_dir: '/root/app'
+    tty: true
+    volumes:
+      - ./python-app:/root/app
+      - ./keycloak/realm.json:/root/app/realm.json
+      - ./keycloak/client.json:/root/app/client.json
+      - ./keycloak/users.json:/root/app/users.json
+      - ./keycloak/params.json:/root/app/params.json
+    # depends_on:
+    #   - keycloak
+    # command: python setting.py
+    # command: bash -c "python setting.py"
+    networks:
+      - keycloak_argon2
+
+volumes:
+  mysql_data:
+
+networks:
+  keycloak_argon2:
+    driver: bridge
