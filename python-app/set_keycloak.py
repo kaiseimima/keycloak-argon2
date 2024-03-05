@@ -16,8 +16,8 @@ with open('params.json') as f:
 def init_keycloak(): 
     keycloak_admin = KeycloakAdmin(
         server_url="http://keycloak:8080/auth",
-        username="admin2",
-        password="admin2",
+        username="admin",
+        password="admin",
         user_realm_name="master",
         verify=True,
     )
@@ -38,8 +38,8 @@ def requestToken():
     keycloak_server_url = "http://keycloak:8080"
     realm_name = "master"
     client_id = clientId
-    username = "admin2"
-    password = "admin2"
+    username = "admin"
+    password = "admin"
 
     # トークンエンドポイントのURL
     # token_url = f"{keycloak_server_url}/realms/{realm_name}/protocol/openid-connect/token"
@@ -101,6 +101,14 @@ def createUsers(token):
 
 
 
+init_keycloak()
+token = requestToken()
+postRealm(token=token)
+createUsers(token=token)
+
+
+
+
 
 
 def getUsers(token):
@@ -142,32 +150,20 @@ def getClients(token):
     res = requests.get(url, headers=headers)
     print(res.text)
 
-    
 
-
-# init_keycloak()
-t = requestToken()
-
-# postRealm(token=t)
-createUsers(token=t)
-
-
-
-
-
-# getUsers(token=t)
-# getRealm(token=t)
-# putRealm(token=t)
-# getClients(token=t)
-# getClient(token=t)
+# getUsers(token=token)
+# getRealm(token=token)
+# putRealm(token=token)
+# getClients(token=token)
+# getClient(token=token)
     
 
 def takeToken():
     url = 'http://keycloak:8080/auth/realms/master/protocol/openid-connect/token'
     payload = {
             "client_id": "admin-cli",
-            "username": "admin2",
-            "password": "admin2",
+            "username": "admin",
+            "password": "admin",
             "grant_type": "password",
         }
     headers = {
