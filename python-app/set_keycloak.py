@@ -82,7 +82,13 @@ def postRealm(token):
          "Authorization": f"Bearer {token}"
     }
     res = requests.post(url, json=realmData, headers=headers)
-    print(res.text)
+
+    # レスポンスの確認
+    if res.status_code == 201:
+        print("Realm creation was successful")
+    else:
+        print("Error:", res.status_code, res.text)
+
 
 
 # ユーザーの作成
@@ -95,8 +101,14 @@ def createUsers(token):
         "Content-Type": "application/json",
          "Authorization": f"Bearer {token}"
     }
-    response = requests.post(url, json=userData, headers=headers)
-    print(response.text)
+    res = requests.post(url, json=userData, headers=headers)
+
+    # レスポンスの確認
+    if res.status_code == 201:
+        print("User creation was successful")
+    else:
+        print("Error:", res.status_code, res.text)
+    
 
 
 
