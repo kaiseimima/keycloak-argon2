@@ -3,6 +3,6 @@
 ## 要約
 APIを用いてKeycloakのパスワードをARGON2で設定する
 
-## Argon2を組み込んだKeycloakのimage作成
-[argon2-password-hash-provider](https://github.com/dreezey/argon2-password-hash-provider)
+## build
+[argon2-password-hash-provider](https://github.com/dreezey/argon2-password-hash-provider)の手順に従ってargon2が組み込まれたkeycloakのimageを作成する。
 
