@@ -1,6 +1,13 @@
 {
-    "clientName": "argon2",
-    "realmName": "devArgon2", 
-    "keycloakUsername": "argon2user",
-    "keycloakPassword": "password"
+    "clientName": "test03",
+    "realmName": "testDev03", 
+    "keycloakUsername": "user",
+    "keycloakPassword": "password",
+    "hashAlgorithm" : "argon2",
+    "argon2Version": "13",
+    "argon2Memory": "65536",
+    "argon2Iterations": "1",
+    "argon2Parallelism": "1",
+    "argon2SaltLength": "16",
+    "argon2HashLength": "32"
 }

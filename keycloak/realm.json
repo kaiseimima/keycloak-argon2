@@ -1,6 +1,6 @@
 {
-    "id": "devArgon2",
-    "realm": "devArgon2",
+    "id": "testDev03",
+    "realm": "testDev03",
     "enabled": true,
-    "passwordPolicy": "hashAlgorithm(argon2)"
+    "passwordPolicy": "hashAlgorithm(argon2) and argon2Version(13) and argon2Memory(65536) and argon2Iterations(3) and argon2Parallelism(1) and argon2SaltLength(16) and argon2HashLength(32)"
 }
