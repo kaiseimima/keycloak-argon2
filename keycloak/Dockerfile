@@ -4,14 +4,6 @@ RUN dnf install --installroot /mnt/rootfs python3-pip python3-wheel python3 --re
     dnf --installroot /mnt/rootfs clean all && \
     rpm --root /mnt/rootfs -e --nodeps setup
 
-# gitのインストール
-# RUN dnf install -y git
-
-# パッケージのインストール
-# それぞれ分けた
-# COPY apache-maven-3.9.6-bin.zip keycloak-webauthn-conditional-mediation-main.zip argon2-password-hash-provider-master.zip /opt/
-
-# aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 # JavaとUnzipのインストール、およびApache Mavenのパス設定
 COPY apache-maven-3.9.6-bin.zip /opt/
 RUN dnf install -y unzip java-17-openjdk java-17-openjdk-devel && \
@@ -36,17 +28,6 @@ RUN cd /opt && \
     mvn clean package && \
     ls -la /opt/argon2-password-hash-provider-master/target
 
-# それぞれ分けた。
-# RUN dnf install -y unzip java-17-openjdk java-17-openjdk-devel && \
-#     cd /opt && \
-#     unzip apache-maven-3.9.6-bin.zip && \
-#     export PATH=/opt/apache-maven-3.9.6/bin:$PATH && \
-#     unzip argon2-password-hash-provider-master.zip && \
-#     cd argon2-password-hash-provider-master && \
-#     mvn clean package && \
-#     unzip keycloak-webauthn-conditional-mediation-main.zip && \
-#     cd keycloak-webauthn-conditional-mediation-main && \
-#     mvn clean package
 
 
 FROM quay.io/keycloak/keycloak:latest as builder
@@ -75,7 +56,6 @@ ENV KC_DB=mysql
 
 # keycloak-webauthn-conditional-mediation.jarとargon2-password-hash-provider-master.jarのコピー
 COPY --from=ubi-micro-build /opt/keycloak-webauthn-conditional-mediation-main/target/keycloak-webauthn-conditional-mediation.jar /opt/keycloak/providers/
-# COPY --from=ubi-micro-build /opt/argon2-password-hash-provider-master/target/argon2-password-hash-provider-master.jar /opt/keycloak/providers/
 COPY --from=ubi-micro-build /opt/argon2-password-hash-provider-master/target/argon2-password-hash-provider-*.jar /opt/keycloak/providers/
 
 WORKDIR /opt/keycloak
@@ -88,15 +68,3 @@ FROM quay.io/keycloak/keycloak:latest
 # builderステージからのファイルのコピー
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
 COPY --from=ubi-micro-build /mnt/rootfs /
-
-# USER root
-# # uuidのインストール
-# RUN pip install uuid
-
-# # データのインポート用ディレクトリの作成と所有者の変更
-# RUN mkdir -p /opt/keycloak/data/import && \
-#     chown 1000 /opt/keycloak/data/import
-
-# USER 1000
-
-# ENTRYPOINT ["/usr/bin/docker-entrypoint.py"]
