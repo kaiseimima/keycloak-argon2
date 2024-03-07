@@ -71,5 +71,3 @@ docker-compose exec python-app bash
 python set_json.py
 python set_keycloak.py 
 ```
-
-# 参考
