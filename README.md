@@ -57,6 +57,18 @@ APIを用いてKeycloakのパスワードをARGON2で設定する
 * argon2SaltLength  : ソルトの長さ (デフォルト: 16)
 * argon2HashLength  : ハッシュの長さ (デフォルト: 32)
 
+Argon2の各種情報は`'http://keycloak:8080/admin/realms/{realm}'`内で設定されており、
+```realm.json
+{
+    "id": "testDev",
+    "realm": "testDev",
+    "enabled": true,
+    "passwordPolicy": "hashAlgorithm(argon2) and argon2Version(13) and argon2Memory(65536) and argon2Iterations(3) and argon2Parallelism(1) and argon2SaltLength(16) and argon2HashLength(32)"
+}
+```
+のように記述されている。
+
+
 
 ## pythonの設定と実行方法
 pythonはDockerの公式イメージのpython3を使用しました。
