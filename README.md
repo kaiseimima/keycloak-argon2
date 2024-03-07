@@ -50,11 +50,11 @@ APIを用いてKeycloakのパスワードをARGON2で設定する
 
 に`Hashing Algorithm`ポリシーの名前を設定してください。
 
-* argon2Version : あい
-* argon2Memory
-* argon2Iterations
-* argon2Parallelism
-* argon2SaltLength
-* argon2HashLength
+* argon2Version     : Argon2のバージョン (デフォルト: 13)
+* argon2Memory      : プロバイダのメモリ制限 (デフォルト: 65535)
+* argon2Iterations  : プロバイダが実行する反復回数 (デフォルト: 1)
+* argon2Parallelism : スレッド数とメモリレーン数 (デフォルト: 1)
+* argon2SaltLength  : ソルトの長さ (デフォルト: 16)
+* argon2HashLength  : ハッシュの長さ (デフォルト: 32)
 
 
