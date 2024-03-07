@@ -58,3 +58,18 @@ APIを用いてKeycloakのパスワードをARGON2で設定する
 * argon2HashLength  : ハッシュの長さ (デフォルト: 32)
 
 
+## pythonの設定と実行方法
+pythonはDockerの公式イメージのpython3を使用しました。
+
+`python-app/`の`Dockerfile`でpython3をコンテナ内で立ち上げ、`requirements.txt`で必要ないくつかのpythonのライブラリをインストールしています。
+
+ターミナルでコンテナを立ち上げて、pythonが立ち上がっているコンテナ(ここではpython-app)へ`docker-compose exec python-app bash`で入って以下のようにpythonを実行してください。
+```bash
+docker-compose up -d
+docker-compose exec python-app bash
+
+python set_json.py
+python set_keycloak.py 
+```
+
+# 参考
